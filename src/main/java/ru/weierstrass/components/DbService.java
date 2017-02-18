@@ -3,15 +3,17 @@ package ru.weierstrass.components;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.weierstrass.models.commons.DbModel;
 
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
 abstract public class DbService<T extends DbModel> {
 
     @Autowired
-    private Db _db;
+    private DataSource _db;
 
     public List<T> loadList( Class<T> clazz, String query, Object... params ) throws Exception {
         List<T> result = new ArrayList<>();
@@ -21,7 +23,12 @@ abstract public class DbService<T extends DbModel> {
             int i = 0;
             st = _db.getConnection().prepareStatement( query );
             for( Object param : params ) {
-                st.setObject( ++i, param );
+                if( param == null ) {
+                    st.setNull( ++i, Types.NULL );
+                }
+                else {
+                    st.setObject( ++i, param );
+                }
             }
             rs = st.executeQuery();
             while( rs.next() ) {

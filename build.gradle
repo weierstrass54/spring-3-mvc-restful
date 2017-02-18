@@ -32,6 +32,7 @@ dependencies {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
     compile group: 'com.impossibl.pgjdbc-ng', name: 'pgjdbc-ng', version: '0.7.1'
+    compile group: 'com.zaxxer', name: 'HikariCP', version: '2.6.0'
     compile ('org.springframework.boot:spring-boot-starter-jetty')
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
