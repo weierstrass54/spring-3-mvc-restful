@@ -15,7 +15,34 @@ abstract public class DbService<T extends DbModel> {
     @Autowired
     private DataSource _db;
 
-    public List<T> loadList( Class<T> clazz, String query, Object... params ) throws Exception {
+    /**
+     * Внутренний класс связанности.
+     * <br/><br/>
+     * Идея в том, что только DbService<?> может создавать экземпляры этого класса.
+     * А значит только данные из СУБД могут быть переданы в объекты-представления
+     * @param <E>
+     */
+    public class RelatedList<E> extends ArrayList<E> {
+
+        private RelatedList( List<E> list ) {
+            super( list );
+        }
+
+    }
+
+    /**
+     * Метод, помечающий данные какого-либо другого DbService<?> как связанные.
+     * <br/><br/>
+     * Идея в том, что только класс-потомок может определить, что какие-то данные являются связанными.
+     * @param related
+     * @param <E>
+     * @return
+     */
+    protected <E> RelatedList<E> asRelated( List<E> related ) {
+        return new RelatedList<>( related );
+    }
+
+    protected List<T> loadList( Class<T> clazz, String query, Object... params ) throws Exception {
         List<T> result = new ArrayList<>();
         PreparedStatement st = null;
         ResultSet rs = null;
@@ -44,8 +71,9 @@ abstract public class DbService<T extends DbModel> {
         }
     }
 
-    //loadString
-    //loadInt
+    protected T loadObject( Class<T> clazz, String query, Object... params ) throws Exception {
+        return loadList( clazz, query, params ).get( 0 );
+    }
 
     private void _close( AutoCloseable acl ) {
         if( acl != null ) {

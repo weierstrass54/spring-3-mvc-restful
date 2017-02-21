@@ -1,5 +1,6 @@
 package ru.weierstrass.models.address;
 
+import ru.weierstrass.components.DbService;
 import ru.weierstrass.models.Storage;
 import ru.weierstrass.models.commons.DbModel;
 
@@ -26,11 +27,14 @@ public class City extends DbModel {
         return this.shops;
     }
 
+    public void setRelatedShops( DbService<City>.RelatedList<Storage> shops ) {
+        this.shops = shops;
+    }
+
     @Override
     public void bind( ResultSet rs ) throws SQLException {
         this.id = rs.getInt( "id" );
         this.name = rs.getString( "name" );
-        //TODO: how to bind related data properly?
         this.shops = new ArrayList<>();
     }
 
