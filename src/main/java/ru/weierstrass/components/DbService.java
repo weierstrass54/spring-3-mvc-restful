@@ -16,24 +16,20 @@ abstract public class DbService<T extends DbModel> {
     private DataSource _db;
 
     /**
-     * Внутренний класс связанности.
+     * Internal class of related data
      * <br/><br/>
-     * Идея в том, что только DbService<?> может создавать экземпляры этого класса.
-     * А значит только данные из СУБД могут быть переданы в объекты-представления
-     * @param <E>
+     * An idea is only DbService<?> class can create instances of this class.
+     * That means that only a database data could be set at DTO.
      */
     public class RelatedList<E> extends ArrayList<E> {
-
         private RelatedList( List<E> list ) {
             super( list );
         }
-
     }
 
     /**
-     * Метод, помечающий данные какого-либо другого DbService<?> как связанные.
-     * <br/><br/>
-     * Идея в том, что только класс-потомок может определить, что какие-то данные являются связанными.
+     * Mark data as related.
+     * Any list fetched by DbService<?> could be marked as related and could be attached to DTO.
      * @param related
      * @param <E>
      * @return

@@ -1,10 +1,9 @@
-package ru.weierstrass.models;
+package ru.weierstrass.models.catalog;
 
 import ru.weierstrass.models.commons.DbModel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 
 public class Brand extends DbModel {
 
