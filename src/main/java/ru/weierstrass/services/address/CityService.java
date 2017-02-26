@@ -19,11 +19,11 @@ public class CityService extends DbService<City> {
     public List<City> loadList( Integer regionId, Integer areaId ) throws Exception {
         List<City> cities = loadList( City.class, "SELECT * FROM public_api_v01.address_get_cities( ?, ? )", regionId, areaId );
         Map<Integer, List<Storage>> storages = _storageService.loadGroupByCity();
-        for( City city : cities ) {
+        cities.forEach( city -> {
             if( storages.get( city.getId() ) != null ) {
                 city.setRelatedShops( asRelated( storages.get( city.getId() ) ) );
             }
-        }
+        } );
         return cities;
     }
 

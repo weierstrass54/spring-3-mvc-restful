@@ -17,13 +17,15 @@ public class CategoryController {
     private CategoryService _categoryService;
 
     @RequestMapping( path = "/category/list", method = RequestMethod.GET )
-    public Category getTree() {
+    public Category getTree() throws Exception {
         return _categoryService.getTree();
     }
 
+    /*
     @RequestMapping( path = "/category/item", method = RequestMethod.GET )
     public Category getCategory( @RequestParam( name = "id", required = true ) int id ) {
         return _categoryService.get( id );
     }
+    */
 
 }

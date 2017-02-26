@@ -45,7 +45,7 @@ public class AddressController {
             @RequestParam( name = "areaId", required = false ) Integer areaId
     ) throws Exception {
         if( regionId == null && areaId == null ) {
-            //TODO: bad request exception handler
+            throw new IllegalArgumentException( "Params `regionId` and `areaId` cannot be null both." );
         }
         return _cityService.loadList( regionId, areaId );
     }

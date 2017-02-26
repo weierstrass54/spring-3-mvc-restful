@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import ru.weierstrass.components.DbService;
 import ru.weierstrass.models.catalog.Category;
 
-import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,23 +11,10 @@ import java.util.Map;
 @Service
 public class CategoryService extends DbService<Category> {
 
-    private static Map<Integer, Category> _map = new HashMap<>();
-    private static Category _tree;
-
-    public Category getTree() {
-        return _tree;
-    }
-
-    public Category get( int id ) {
-        return _map.get( id );
-    }
-
-    @PostConstruct
-    private void init() throws Exception {
-        for( Category category : loadList() ) {
-            _map.put( category.getId(), category );
-        }
-        _tree = Category.buildTree( _map );
+    public Category getTree() throws Exception {
+        Map<Integer, Category> map = new HashMap<>();
+        loadList().forEach( category -> map.put( category.getId(), category ) );
+        return Category.buildTree( map );
     }
 
     private List<Category> loadList() throws Exception {

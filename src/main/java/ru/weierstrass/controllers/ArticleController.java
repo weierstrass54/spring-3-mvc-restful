@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.weierstrass.components.RequestPaginationParams;
+import ru.weierstrass.components.PaginationRequestParams;
 import ru.weierstrass.models.article.AndroidArticle;
 import ru.weierstrass.models.article.Article;
 import ru.weierstrass.models.article.Promo;
@@ -32,9 +32,9 @@ public class ArticleController {
         @RequestParam( name = "chunk", required = true ) int chunk,
         @RequestParam( name = "page", required = false, defaultValue = "1" ) int page
     ) throws Exception {
-        RequestPaginationParams params = new RequestPaginationParams( chunk, page );
+        PaginationRequestParams params = new PaginationRequestParams( chunk, page );
         if( !params.getErrors().isEmpty() ) {
-            //TODO: обработка ошибок 400 (Bad Request)
+            throw new IllegalArgumentException( params.getErrorsString() );
         }
         return _promoService.loadArticleList( params.getOffset(), params.getLimit() );
     }

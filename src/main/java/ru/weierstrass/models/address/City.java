@@ -27,8 +27,8 @@ public class City extends DbModel {
         return this.shops;
     }
 
-    public void setRelatedShops( DbService<City>.RelatedList<Storage> shops ) {
-        this.shops = shops;
+    public void setRelatedShops( DbService<City>.Related<List<Storage>> shops ) {
+        this.shops = shops.get();
     }
 
     @Override

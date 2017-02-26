@@ -21,10 +21,17 @@ abstract public class DbService<T extends DbModel> {
      * An idea is only DbService<?> class can create instances of this class.
      * That means that only a database data could be set at DTO.
      */
-    public class RelatedList<E> extends ArrayList<E> {
-        private RelatedList( List<E> list ) {
-            super( list );
+    public class Related<E> {
+        private E object;
+
+        private Related( E related ) {
+            this.object = related;
         }
+
+        public E get() {
+            return this.object;
+        }
+
     }
 
     /**
@@ -34,8 +41,8 @@ abstract public class DbService<T extends DbModel> {
      * @param <E>
      * @return
      */
-    protected <E> RelatedList<E> asRelated( List<E> related ) {
-        return new RelatedList<>( related );
+    protected <E> Related<E> asRelated( E related ) {
+        return new Related<>( related );
     }
 
     protected List<T> loadList( Class<T> clazz, String query, Object... params ) throws Exception {

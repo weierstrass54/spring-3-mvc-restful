@@ -3,26 +3,34 @@ package ru.weierstrass.components;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class RequestPaginationParams {
+public class PaginationRequestParams {
 
     protected int chunk;
     protected int page;
 
     protected Collection<String> errors;
 
-    public RequestPaginationParams( int chunk, int page ) {
+    public PaginationRequestParams( int chunk, int page ) {
         this.chunk = chunk;
         this.page = page;
         this.errors = new ArrayList<>();
         this.check();
     }
 
-    public RequestPaginationParams( int chunk ) {
+    public PaginationRequestParams( int chunk ) {
         this( chunk, 1 );
     }
 
     public Collection<String> getErrors() {
         return this.errors;
+    }
+
+    public String getErrorsString() {
+        String result = "";
+        for( String error : this.errors ) {
+            result += '\n' + error;
+        }
+        return result;
     }
 
     public int getOffset() {
@@ -37,9 +45,9 @@ public class RequestPaginationParams {
         return this.page;
     }
 
-    private void check() {
-        if( this.chunk < 0 ) {
-            this.errors.add( "Parameter `chunk` must be greater or equals 0." );
+    protected void check() {
+        if( this.chunk <= 0 ) {
+            this.errors.add( "Parameter `chunk` must be greater than 0." );
         }
         if( this.page <= 0 ) {
             this.errors.add( "Parameter `page` must be greater than 0." );
