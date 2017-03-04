@@ -11,6 +11,10 @@ import java.util.Map;
 @Service
 public class CategoryService extends DbService<Category> {
 
+    public Category get( int id ) {
+        return null;
+    }
+
     public Category getTree() throws Exception {
         Map<Integer, Category> map = new HashMap<>();
         loadList().forEach( category -> map.put( category.getId(), category ) );

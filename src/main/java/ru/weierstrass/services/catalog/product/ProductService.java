@@ -2,6 +2,7 @@ package ru.weierstrass.services.catalog.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.weierstrass.components.DbService;
+import ru.weierstrass.models.catalog.Brand;
 import ru.weierstrass.models.catalog.product.Image;
 import ru.weierstrass.models.catalog.product.Product;
 import ru.weierstrass.services.catalog.BrandService;
@@ -24,12 +25,12 @@ abstract public class ProductService<E extends Product> extends DbService<E> {
         List<Integer> ids = new ArrayList<>();
         list.forEach( product -> ids.add( product.getId() ) );
         Map<Integer, List<Image>> images = _imageService.loadGroups( ids );
-        //TODO: brands
-        //TODO: categories
         list.forEach( product -> {
             if( images.containsKey( product.getId() ) ) {
                 product.setRelatedImages( asRelated( images.get( product.getId() ) ) );
             }
+            product.setRelatedBrand( asRelated( _brandService.get( product.getId() ) ) );
+            product.setRelatedCategory( asRelated( _categoryService.get( product.getId() ) ) );
         } );
     }
 
