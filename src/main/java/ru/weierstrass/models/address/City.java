@@ -1,6 +1,6 @@
 package ru.weierstrass.models.address;
 
-import ru.weierstrass.components.DbService;
+import ru.weierstrass.components.database.DbService;
 import ru.weierstrass.models.Storage;
 import ru.weierstrass.models.commons.DbModel;
 

@@ -1,8 +1,7 @@
 package ru.weierstrass.services.catalog.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.weierstrass.components.DbService;
-import ru.weierstrass.models.catalog.Brand;
+import ru.weierstrass.components.database.DbService;
 import ru.weierstrass.models.catalog.product.Image;
 import ru.weierstrass.models.catalog.product.Product;
 import ru.weierstrass.services.catalog.BrandService;

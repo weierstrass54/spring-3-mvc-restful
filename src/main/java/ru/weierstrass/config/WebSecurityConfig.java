@@ -1,7 +1,9 @@
 package ru.weierstrass.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -9,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import ru.weierstrass.components.ExceptionHandlerAdvice;
+import ru.weierstrass.components.handlers.ExceptionHandlerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static String REALM = "e2e4-api-realm";
+
+    @Autowired
+    private AuthenticationProvider _authentication;
 
     private static final AuthenticationEntryPoint _basicEntryPoint = (
         HttpServletRequest request, HttpServletResponse response, AuthenticationException authException
@@ -51,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure( AuthenticationManagerBuilder auth ) throws Exception {
-        auth.inMemoryAuthentication().withUser( "test" ).password( "test" ).roles( "USER" );
+        auth.authenticationProvider( _authentication );
     }
 
 }

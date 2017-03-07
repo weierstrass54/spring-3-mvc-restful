@@ -1,7 +1,6 @@
 package ru.weierstrass.models.catalog.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ru.weierstrass.components.DbService;
 import ru.weierstrass.models.catalog.Brand;
 import ru.weierstrass.models.catalog.Category;
 import ru.weierstrass.models.commons.DbModel;

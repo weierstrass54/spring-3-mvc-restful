@@ -1,4 +1,4 @@
-package ru.weierstrass.components;
+package ru.weierstrass.components.database;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.weierstrass.models.commons.DbModel;

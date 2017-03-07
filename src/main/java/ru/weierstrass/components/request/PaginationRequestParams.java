@@ -1,4 +1,4 @@
-package ru.weierstrass.components;
+package ru.weierstrass.components.request;
 
 import java.util.ArrayList;
 import java.util.Collection;

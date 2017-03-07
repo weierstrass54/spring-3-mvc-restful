@@ -1,7 +1,7 @@
 package ru.weierstrass.services;
 
 import org.springframework.stereotype.Service;
-import ru.weierstrass.components.DbService;
+import ru.weierstrass.components.database.DbService;
 import ru.weierstrass.models.Storage;
 
 import java.util.ArrayList;

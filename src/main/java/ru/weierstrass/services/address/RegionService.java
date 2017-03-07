@@ -1,7 +1,7 @@
 package ru.weierstrass.services.address;
 
 import org.springframework.stereotype.Service;
-import ru.weierstrass.components.DbService;
+import ru.weierstrass.components.database.DbService;
 import ru.weierstrass.models.address.Region;
 
 import java.util.List;

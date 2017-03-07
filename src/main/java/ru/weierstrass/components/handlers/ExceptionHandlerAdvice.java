@@ -1,4 +1,4 @@
-package ru.weierstrass.components;
+package ru.weierstrass.components.handlers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
