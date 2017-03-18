@@ -26,4 +26,5 @@ public class DefaultController implements ErrorController {
     public String getErrorPath() {
         return ERROR_PATH;
     }
+
 }

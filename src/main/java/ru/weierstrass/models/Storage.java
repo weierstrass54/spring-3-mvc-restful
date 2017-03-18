@@ -6,7 +6,6 @@ import ru.weierstrass.models.commons.DbModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 public class Storage extends DbModel {
 
     protected int id;
