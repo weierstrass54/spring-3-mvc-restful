@@ -1,0 +1,15 @@
+<configuration debug="true" scan="true" scanPeriod="1 minutes">
+  <timestamp key="seconds" datePattern="HHmmss"/>
+  <logger name="test" level="DEBUG"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%7relative %-5level .\(%F:%L\) %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="STDOUT"/>
+  </root>
+
+</configuration>
