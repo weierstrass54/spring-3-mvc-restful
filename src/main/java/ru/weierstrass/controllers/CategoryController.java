@@ -13,8 +13,12 @@ import java.util.List;
 @RestController
 public class CategoryController {
 
-    @Autowired
     private CategoryService _categoryService;
+
+    @Autowired
+    public CategoryController( CategoryService categoryService ) {
+        _categoryService = categoryService;
+    }
 
     @RequestMapping( path = "/category/list", method = RequestMethod.GET )
     public Category getTree() throws Exception {

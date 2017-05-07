@@ -27,7 +27,7 @@ jar {
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-web",
-            //"org.springframework.boot:spring-boot-starter-security",
+            "org.springframework.boot:spring-boot-starter-security",
             "org.springframework.boot:spring-boot-starter-jdbc",
             "com.impossibl.pgjdbc-ng:pgjdbc-ng:0.7.1",
             "com.zaxxer:HikariCP",

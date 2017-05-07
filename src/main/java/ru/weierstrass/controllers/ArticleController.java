@@ -17,10 +17,14 @@ import java.util.List;
 @RestController
 public class ArticleController {
 
-    @Autowired
     private PromoService _promoService;
-    @Autowired
     private ArticleService _articleService;
+
+    @Autowired
+    public ArticleController( PromoService promoService, ArticleService articleService ) {
+        _promoService = promoService;
+        _articleService = articleService;
+    }
 
     @RequestMapping( path = "/article/banner", method = RequestMethod.GET )
     public List<Promo> getBannerList() throws Exception {

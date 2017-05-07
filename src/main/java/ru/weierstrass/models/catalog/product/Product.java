@@ -3,7 +3,7 @@ package ru.weierstrass.models.catalog.product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import ru.weierstrass.models.catalog.Brand;
 import ru.weierstrass.models.catalog.Category;
-import ru.weierstrass.models.commons.DbModel;
+import ru.weierstrass.models.commons.DatabaseModel;
 import ru.weierstrass.services.catalog.product.ProductService;
 
 import java.sql.ResultSet;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract public class Product extends DbModel {
+abstract public class Product implements DatabaseModel {
 
     protected int id;
     protected String fullName;
@@ -59,15 +59,15 @@ abstract public class Product extends DbModel {
         return this.brand;
     }
 
-    public void setRelatedCategory( ProductService<?>.Related<Category> category ) {
+    public void setCategory( ProductService<? extends Product>.Relation<Category> category ) {
         this.category = category.get();
     }
 
-    public void setRelatedBrand( ProductService<?>.Related<Brand> brand ) {
+    public void setBrand( ProductService<? extends Product>.Relation<Brand> brand ) {
         this.brand = brand.get();
     }
 
-    public void setRelatedImages( ProductService<?>.Related<List<Image>> images ) {
+    public void setImages( ProductService<? extends Product>.Relation<List<Image>> images ) {
         this.images = images.get();
     }
 
@@ -76,7 +76,7 @@ abstract public class Product extends DbModel {
     }
 
     @Override
-    public void bind( ResultSet rs ) throws SQLException {
+    public void mapping( ResultSet rs ) throws SQLException {
         this.fullName = rs.getString( "fullName" );
         this.shortName = rs.getString( "shortName" );
         this.categoryId = rs.getInt( "categoryId" );

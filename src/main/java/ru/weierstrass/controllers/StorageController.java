@@ -12,8 +12,12 @@ import java.util.List;
 @RestController
 public class StorageController {
 
-    @Autowired
     private StorageService _service;
+
+    @Autowired
+    public StorageController( StorageService storageService ) {
+        _service = storageService;
+    }
 
     @RequestMapping( path = "/storage", method = RequestMethod.GET )
     public List<Storage> getList() throws Exception {
