@@ -1,6 +1,7 @@
 package ru.weierstrass.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -8,13 +9,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import ru.weierstrass.components.authentication.HttpBasicFailure;
 
+import javax.sql.DataSource;
+
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final DataSource _db;
     private final HttpBasicFailure _failure;
 
     @Autowired
-    public SecurityConfig( HttpBasicFailure failure ) {
+    public SecurityConfig( DataSource db, HttpBasicFailure failure ) {
+        _db = db;
         _failure = failure;
     }
 
@@ -39,7 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure( AuthenticationManagerBuilder auth ) throws Exception {
-        auth.inMemoryAuthentication().withUser( "test" ).password( "test" ).roles( "USER" );
+        auth.jdbcAuthentication()
+            .dataSource( _db )
+                .usersByUsernameQuery( "SELECT login, LOWER( password ), true FROM site.users WHERE login = ?" )
+                .passwordEncoder( new Md5PasswordEncoder() )
+                .authoritiesByUsernameQuery( "SELECT login, 'USER' FROM site.users WHERE login = ?" );
     }
 
 }
