@@ -1,6 +1,6 @@
 package ru.weierstrass.models.catalog;
 
-import ru.weierstrass.models.commons.DbModel;
+import ru.weierstrass.models.commons.DatabaseModel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Category extends DbModel {
+public class Category implements DatabaseModel {
 
     protected int id;
     protected String alias;
@@ -65,7 +65,7 @@ public class Category extends DbModel {
     }
 
     @Override
-    public void bind( ResultSet rs ) throws SQLException {
+    public void mapping( ResultSet rs ) throws SQLException {
         this.id = rs.getInt( "id" );
         this.alias = rs.getString( "alias" );
         this.name = rs.getString( "name" );

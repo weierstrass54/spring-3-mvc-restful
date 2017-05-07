@@ -12,8 +12,12 @@ import java.util.List;
 @RestController
 public class BrandController {
 
-    @Autowired
     private BrandService _service;
+
+    @Autowired
+    public BrandController( BrandService brandService ) {
+        _service = brandService;
+    }
 
     @RequestMapping( path = "/brand", method = RequestMethod.GET )
     public List<Brand> getList() throws Exception {

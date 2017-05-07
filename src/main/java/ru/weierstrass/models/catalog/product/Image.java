@@ -1,11 +1,11 @@
 package ru.weierstrass.models.catalog.product;
 
-import ru.weierstrass.models.commons.DbModel;
+import ru.weierstrass.models.commons.DatabaseModel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Image extends DbModel {
+public class Image implements DatabaseModel {
 
     private static final String PREFIX = "http://images.e2e4online.ru";
 
@@ -61,7 +61,7 @@ public class Image extends DbModel {
     }
 
     @Override
-    public void bind( ResultSet rs ) throws SQLException {
+    public void mapping( ResultSet rs ) throws SQLException {
         this.id = rs.getInt( "id" );
         this.referenceId = rs.getInt( "referenceId" );
         this.position = rs.getInt( "position" );

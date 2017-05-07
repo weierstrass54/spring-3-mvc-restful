@@ -1,11 +1,11 @@
 package ru.weierstrass.models.article;
 
-import ru.weierstrass.models.commons.DbModel;
+import ru.weierstrass.models.commons.DatabaseModel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Promo extends DbModel {
+public class Promo implements DatabaseModel {
 
     protected int id;
     protected String title;
@@ -24,7 +24,7 @@ public class Promo extends DbModel {
     }
 
     @Override
-    public void bind( ResultSet rs ) throws SQLException {
+    public void mapping( ResultSet rs ) throws SQLException {
         this.id = rs.getInt( "id" );
         this.title = rs.getString( "title" );
         this.image = rs.getString( "image" );

@@ -12,8 +12,12 @@ import java.util.List;
 @RestController
 public class DeliveryController {
 
-    @Autowired
     private FreighterService _freighterService;
+
+    @Autowired
+    public DeliveryController( FreighterService freighterService ) {
+        _freighterService = freighterService;
+    }
 
     @RequestMapping( path = "/delivery/freighters", method = RequestMethod.GET )
     public List<Freighter> getFreighters() throws Exception {

@@ -1,44 +1,36 @@
 group 'ru.weierstrass'
-version '0.0.1'
+version '0.1'
 
 buildscript {
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.1.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.3.RELEASE")
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'war'
-
-jar {
-    baseName = 'gs-rest-service'
-    version = '0.0.1'
-}
-
-war {
-    baseName = 'root'
-    version = ''
-}
 
 sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
+jar {
+    baseName = 'api'
+    version = '0.7.0'
+}
+
 dependencies {
-    compile( 'org.springframework.boot:spring-boot-starter-web' ) {
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
-    }
-    compile( 'org.springframework.boot:spring-boot-starter-security' )
-    compile group: 'com.impossibl.pgjdbc-ng', name: 'pgjdbc-ng', version: '0.7.1'
-    compile group: 'com.zaxxer', name: 'HikariCP', version: '2.6.0'
-    compile ('org.springframework.boot:spring-boot-starter-jetty')
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile "org.springframework.boot:spring-boot-starter-web",
+            "org.springframework.boot:spring-boot-starter-security",
+            "org.springframework.boot:spring-boot-starter-jdbc",
+            "com.impossibl.pgjdbc-ng:pgjdbc-ng:0.7.1",
+            "com.zaxxer:HikariCP",
+            "ch.qos.logback:logback-classic:1.2.3"
+    testCompile group: 'junit', name: 'junit', version: '4.11'
 }

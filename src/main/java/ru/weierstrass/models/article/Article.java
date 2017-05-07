@@ -22,8 +22,8 @@ public class Article extends Promo {
     }
 
     @Override
-    public void bind( ResultSet rs ) throws SQLException {
-        super.bind( rs );
+    public void mapping( ResultSet rs ) throws SQLException {
+        super.mapping( rs );
         this.created = rs.getString( "created" );
         this.contentShort = rs.getString( "content_short" );
         this.contentFull = rs.getString( "content_full" );

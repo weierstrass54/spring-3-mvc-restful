@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.impossibl.postgres.jdbc.PGDriver
+    url: jdbc:pgsql://192.168.128.233:5432/opentech
+    username: php-api
+    password: Nfe_Rbnf5
+    hikari:
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048

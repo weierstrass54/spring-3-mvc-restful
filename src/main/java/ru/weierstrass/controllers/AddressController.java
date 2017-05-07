@@ -17,12 +17,20 @@ import java.util.List;
 @RestController
 public class AddressController {
 
-    @Autowired
     private RegionService _regionService;
-    @Autowired
     private AreaService _areaService;
-    @Autowired
     private CityService _cityService;
+
+    @Autowired
+    public AddressController(
+        RegionService regionService,
+        AreaService areaService,
+        CityService cityService
+    ) {
+        _regionService = regionService;
+        _areaService = areaService;
+        _cityService = cityService;
+    }
 
     @RequestMapping( path = "/address/region", method = RequestMethod.GET )
     public List<Region> getRegionList() throws Exception {

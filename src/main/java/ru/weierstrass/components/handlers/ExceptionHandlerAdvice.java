@@ -18,9 +18,9 @@ public class ExceptionHandlerAdvice {
 
     private static final ObjectMapper _mapper = new ObjectMapper();
 
-    public static String toJson( Exception e, HttpStatus status ) throws JsonProcessingException {
+    public static String toJson( Exception e, int status ) throws JsonProcessingException {
         Map<String, String> data = new HashMap<>();
-        data.put( "code", String.valueOf( status.value() ) );
+        data.put( "code", String.valueOf( status ) );
         data.put( "type", e.getClass().getName() );
         data.put( "message", e.getLocalizedMessage() );
         return _mapper.writeValueAsString( data );
@@ -45,7 +45,7 @@ public class ExceptionHandlerAdvice {
         HttpHeaders headers = new HttpHeaders();
         try {
             headers.setContentType( MediaType.APPLICATION_JSON_UTF8 );
-            return new ResponseEntity<>( toJson( e, status ), headers, status );
+            return new ResponseEntity<>( toJson( e, status.value() ), headers, status );
         }
         catch( JsonProcessingException jsonEx ) {
             headers.setContentType( MediaType.TEXT_PLAIN );
