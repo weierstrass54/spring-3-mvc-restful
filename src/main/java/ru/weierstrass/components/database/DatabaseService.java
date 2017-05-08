@@ -2,7 +2,6 @@ package ru.weierstrass.components.database;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.weierstrass.models.commons.DatabaseModel;
 
 import javax.sql.DataSource;
@@ -53,7 +52,7 @@ abstract public class DatabaseService<T extends DatabaseModel> {
         return new Relation<>( relation );
     }
 
-    protected List<T> loadList( Class<T> clazz, String query, Object... params ) throws SQLException, InstantiationException, IllegalAccessException {
+    protected List<T> loadList( Class<T> clazz, String query, Object... params ) {
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         List<T> result = new ArrayList<>();
@@ -68,7 +67,7 @@ abstract public class DatabaseService<T extends DatabaseModel> {
                     statement.setObject( ++i, param );
                 }
             }
-            _log.debug( "Executing query {} with params {}", query, params );
+            _log.info( "Executing query {} with params {}", query, params );
             resultSet = statement.executeQuery();
             while( resultSet.next() ) {
                 T entity = clazz.newInstance();
@@ -76,6 +75,14 @@ abstract public class DatabaseService<T extends DatabaseModel> {
                 result.add( entity );
             }
             return result;
+        }
+        catch( SQLException e ) {
+            _log.error( "SQL Error: {}", e.getLocalizedMessage(), e );
+            return new ArrayList<>();
+        }
+        catch( InstantiationException | IllegalAccessException e ) {
+            _log.error( "Object mapping error: {}", e.getLocalizedMessage(), e );
+            return new ArrayList<>();
         }
         finally {
             _close( statement );

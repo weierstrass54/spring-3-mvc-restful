@@ -25,6 +25,7 @@ abstract public class Product implements DatabaseModel {
     private int categoryId;
     private int brandId;
 
+    @Override
     public int getId() {
         return this.id;
     }

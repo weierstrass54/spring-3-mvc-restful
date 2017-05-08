@@ -40,6 +40,7 @@ public class Category implements DatabaseModel {
         return root;
     }
 
+    @Override
     public int getId() {
         return this.id;
     }

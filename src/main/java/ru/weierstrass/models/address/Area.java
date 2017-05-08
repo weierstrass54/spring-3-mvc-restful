@@ -10,6 +10,7 @@ public class Area implements DatabaseModel {
     protected int id;
     protected String name;
 
+    @Override
     public int getId() {
         return this.id;
     }

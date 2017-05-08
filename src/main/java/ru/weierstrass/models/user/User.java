@@ -12,6 +12,11 @@ public class User implements DatabaseModel {
     private String password;
 
     @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
     public void mapping( ResultSet rs ) throws SQLException {
         this.id = rs.getInt( "id" );
         this.login = rs.getString( "login" );

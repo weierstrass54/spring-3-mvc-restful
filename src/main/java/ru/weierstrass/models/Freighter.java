@@ -14,6 +14,7 @@ public class Freighter implements DatabaseModel {
     private String name;
     private List<Integer> cityIds;
 
+    @Override
     public int getId() {
         return this.id;
     }

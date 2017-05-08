@@ -11,6 +11,7 @@ public class Brand implements DatabaseModel {
     protected String name;
     protected String url;
 
+    @Override
     public int getId() {
         return this.id;
     }
@@ -23,6 +24,7 @@ public class Brand implements DatabaseModel {
         return this.url;
     }
 
+    @Override
     public void mapping( ResultSet rs ) throws SQLException {
         this.id = rs.getInt( "id" );
         this.name = rs.getString( "name" );

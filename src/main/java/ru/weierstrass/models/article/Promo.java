@@ -11,6 +11,7 @@ public class Promo implements DatabaseModel {
     protected String title;
     protected String image;
 
+    @Override
     public int getId() {
         return this.id;
     }
