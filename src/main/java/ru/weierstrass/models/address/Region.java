@@ -11,6 +11,7 @@ public class Region implements DatabaseModel {
     protected int type;
     protected String name;
 
+    @Override
     public int getId() {
         return this.id;
     }

@@ -27,10 +27,12 @@ jar {
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-web",
+            "org.springframework.boot:spring-boot-starter-cache",
             "org.springframework.boot:spring-boot-starter-security",
             "org.springframework.boot:spring-boot-starter-jdbc",
             "com.impossibl.pgjdbc-ng:pgjdbc-ng:0.7.1",
             "com.zaxxer:HikariCP",
             "ch.qos.logback:logback-classic:1.2.3"
+    //compile files( 'libs/pglino-0.1-SNAPSHOT.jar' )
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }

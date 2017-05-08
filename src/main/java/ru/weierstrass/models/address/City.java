@@ -15,6 +15,7 @@ public class City implements DatabaseModel {
     protected String name;
     protected List<Storage> shops;
 
+    @Override
     public int getId() {
         return this.id;
     }

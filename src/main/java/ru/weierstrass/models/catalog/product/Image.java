@@ -24,6 +24,7 @@ public class Image implements DatabaseModel {
 
     protected int referenceId;
 
+    @Override
     public int getId() {
         return this.id;
     }

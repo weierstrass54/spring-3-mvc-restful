@@ -19,6 +19,7 @@ public class Storage implements DatabaseModel {
     protected int priceZoneId;
     protected int cityId;
 
+    @Override
     public int getId() {
         return this.id;
     }

@@ -1,6 +1,6 @@
-<configuration debug="true" scan="true" scanPeriod="1 minutes">
+<configuration debug="false" scan="true" scanPeriod="1 minutes">
   <timestamp key="seconds" datePattern="HHmmss"/>
-  <logger name="test" level="DEBUG"/>
+  <logger name="test" level="INFO"/>
 
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <encoder>
