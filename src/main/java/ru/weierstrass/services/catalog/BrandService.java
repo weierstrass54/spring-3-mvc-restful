@@ -9,8 +9,6 @@ import ru.weierstrass.components.database.DatabaseService;
 import ru.weierstrass.models.catalog.Brand;
 
 import javax.sql.DataSource;
-import javax.xml.crypto.Data;
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -27,7 +25,7 @@ public class BrandService extends DatabaseService<Brand> {
         return loadList().get( id );
     }
 
-    @Cacheable( "brand" )
+    @Cacheable( value = "brand" )
     public List<Brand> loadList() {
         return loadList( Brand.class, "SELECT * FROM public_api_v01.catalog_get_brands()" );
     }
