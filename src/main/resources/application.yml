@@ -9,3 +9,9 @@ spring:
       cachePrepStmts: true
       prepStmtCacheSize: 250
       prepStmtCacheSqlLimit: 2048
+lino:
+  name: api-cache
+  host: 192.168.128.233:5432/opentech
+  user: php-api
+  password: Nfe_Rbnf5
+  thread-count: 5

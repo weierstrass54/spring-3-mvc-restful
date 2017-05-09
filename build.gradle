@@ -33,6 +33,6 @@ dependencies {
             "com.impossibl.pgjdbc-ng:pgjdbc-ng:0.7.1",
             "com.zaxxer:HikariCP",
             "ch.qos.logback:logback-classic:1.2.3"
-    //compile files( 'libs/pglino-0.1-SNAPSHOT.jar' )
+    compile files( 'libs/pglino-1.0.jar' )
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
