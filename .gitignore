@@ -65,7 +65,6 @@ fabric.properties
 *.ctxt
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
