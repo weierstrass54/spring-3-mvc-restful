@@ -5,14 +5,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import ru.weierstrass.components.database.DatabaseService;
+import ru.weierstrass.components.database.ORMDatabaseService;
 import ru.weierstrass.models.catalog.Brand;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 @Service
-public class BrandService extends DatabaseService<Brand> {
+public class BrandService extends ORMDatabaseService<Brand> {
 
     private static final Logger _log = LoggerFactory.getLogger( BrandService.class );
 

@@ -2,7 +2,7 @@ package ru.weierstrass.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.weierstrass.components.database.DatabaseService;
+import ru.weierstrass.components.database.ORMDatabaseService;
 import ru.weierstrass.models.Storage;
 
 import javax.sql.DataSource;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class StorageService extends DatabaseService<Storage> {
+public class StorageService extends ORMDatabaseService<Storage> {
 
     @Autowired
     public StorageService( DataSource db ) {

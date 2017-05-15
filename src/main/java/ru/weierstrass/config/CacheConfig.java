@@ -32,8 +32,10 @@ public class CacheConfig {
         return new LinoCacheManager( _properties );
     }
 
+    /*
     public CacheManager ttlCacheManager() {
         return new LinoCacheManager( _properties, 1, TimeUnit.HOURS );
     }
+    */
 
 }

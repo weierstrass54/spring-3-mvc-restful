@@ -1,19 +1,18 @@
 package ru.weierstrass.services.catalog.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.weierstrass.components.database.DatabaseService;
+import ru.weierstrass.components.database.ORMDatabaseService;
 import ru.weierstrass.models.catalog.product.Image;
 import ru.weierstrass.models.catalog.product.Product;
 import ru.weierstrass.services.catalog.BrandService;
 import ru.weierstrass.services.catalog.CategoryService;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-abstract public class ProductService<E extends Product> extends DatabaseService<E> {
+abstract public class ProductService<E extends Product> extends ORMDatabaseService<E> {
 
     private ImageService _imageService;
     private BrandService _brandService;
@@ -32,7 +31,7 @@ abstract public class ProductService<E extends Product> extends DatabaseService<
         _categoryService = categoryService;
     }
 
-    protected void aggregate( List<E> list ) throws SQLException, InstantiationException, IllegalAccessException {
+    protected void aggregate( List<E> list ) {
         List<Integer> ids = new ArrayList<>();
         list.forEach( product -> ids.add( product.getId() ) );
         Map<Integer, List<Image>> images = _imageService.loadGroups( ids );
@@ -43,6 +42,10 @@ abstract public class ProductService<E extends Product> extends DatabaseService<
             product.setBrand( relation( _brandService.get( product.getId() ) ) );
             product.setCategory( relation( _categoryService.get( product.getId() ) ) );
         } );
+    }
+
+    protected List<Integer> loadIds( String query, Object... params ) {
+        return loadColumn( Integer.class, query, params );
     }
 
 }

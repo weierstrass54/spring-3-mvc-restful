@@ -1,6 +1,6 @@
 package ru.weierstrass.models.address;
 
-import ru.weierstrass.components.database.DatabaseService;
+import ru.weierstrass.components.database.ORMDatabaseService;
 import ru.weierstrass.models.Storage;
 import ru.weierstrass.models.commons.DatabaseModel;
 
@@ -28,7 +28,7 @@ public class City implements DatabaseModel {
         return this.shops;
     }
 
-    public void setRelatedShops( DatabaseService<City>.Relation<List<Storage>> shops ) {
+    public void setRelatedShops( ORMDatabaseService<City>.Relation<List<Storage>> shops ) {
         this.shops = shops.get();
     }
 
