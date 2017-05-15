@@ -24,9 +24,9 @@ public class OfferService extends ProductService<Offer> {
         super( db, imageService, brandService, categoryService );
     }
 
-    public List<Offer> loadList() throws SQLException, InstantiationException, IllegalAccessException {
-        List<Integer> ids = new ArrayList<>();
-        List<Offer> list = loadList( Offer.class, "SELECT 123" );
+    public List<Offer> loadList() {
+        List<Integer> ids = loadIds( "SELECT * FROM public_api_v07.catalog_get_products_by_search( 0, 5, 1, 7, null, null, null, null, '[{\"type\": \"price\", \"direction\": \"asc\"}]'::json )" );
+        List<Offer> list = loadList( Offer.class, "SELECT * FROM public_api_v01.catalog_get_product_by_ids( <ids> )" );
         aggregate( list );
         return list;
     }

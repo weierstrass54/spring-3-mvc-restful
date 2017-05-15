@@ -2,7 +2,7 @@ package ru.weierstrass.services.address;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.weierstrass.components.database.DatabaseService;
+import ru.weierstrass.components.database.ORMDatabaseService;
 import ru.weierstrass.models.Storage;
 import ru.weierstrass.models.address.City;
 import ru.weierstrass.services.StorageService;
@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class CityService extends DatabaseService<City> {
+public class CityService extends ORMDatabaseService<City> {
 
     private StorageService _storageService;
 

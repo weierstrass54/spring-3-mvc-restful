@@ -38,16 +38,6 @@ abstract public class Product implements DatabaseModel {
         return this.shortName;
     }
 
-    @JsonIgnore
-    public int getCategoryId() {
-        return this.categoryId;
-    }
-
-    @JsonIgnore
-    public int getBrandId() {
-        return this.brandId;
-    }
-
     public int getWarranty() {
         return this.warranty;
     }
@@ -58,6 +48,16 @@ abstract public class Product implements DatabaseModel {
 
     public Brand getBrand() {
         return this.brand;
+    }
+
+    @JsonIgnore
+    public int getCategoryId() {
+        return this.categoryId;
+    }
+
+    @JsonIgnore
+    public int getBrandId() {
+        return this.brandId;
     }
 
     public void setCategory( ProductService<? extends Product>.Relation<Category> category ) {

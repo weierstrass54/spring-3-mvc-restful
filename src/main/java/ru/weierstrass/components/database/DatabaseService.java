@@ -1,78 +1,64 @@
 package ru.weierstrass.components.database;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.weierstrass.models.commons.DatabaseModel;
-
-import javax.sql.DataSource;
-import java.sql.*;
+import java.lang.reflect.InvocationTargetException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import javax.sql.DataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-abstract public class DatabaseService<T extends DatabaseModel> {
+abstract public class DatabaseService {
 
     private static final Logger _log = LoggerFactory.getLogger( DatabaseService.class );
 
     private DataSource _db;
 
-    /**
-     * Constructor allows to use DataSource determined by child class
-     * @param db
-     */
-    protected DatabaseService( DataSource db ) {
+    @Autowired
+    DatabaseService( DataSource db ) {
         _db = db;
     }
 
-    /**
-     * Internal class of related data
-     * <br/><br/>
-     * An idea is only DatabaseService<?> class can create instances of this class.
-     * That means that only a database data could be set at DTO.
-     */
-    public class Relation<E> {
-        private E _relation;
-
-        private Relation( E relation ) {
-            _relation = relation;
-        }
-
-        public E get() {
-            return _relation;
-        }
+    protected interface ObjectFactory<E> {
+        E create( ResultSet rs ) throws SQLException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException;
     }
 
-    /**
-     * Mark data as related.
-     * Any list fetched by DatabaseService<?> could be marked as related and could be attached to DTO.
-     * @param relation
-     * @param <E>
-     * @return
-     */
-    protected <E> Relation<E> relation( E relation ) {
-        return new Relation<>( relation );
+    protected Integer loadInt( String query, Object... params ) {
+        return Integer.valueOf( loadString( query, params ) );
     }
 
-    protected List<T> loadList( Class<T> clazz, String query, Object... params ) {
+    protected Double loadDouble( String query, Object... params ) {
+        return Double.valueOf( loadString( query, params ) );
+    }
+
+    protected String loadString( String query, Object... params ) {
+        return loadColumn( String.class, query, params ).get( 0 );
+    }
+
+    protected <E> List<E> loadColumn( Class<E> clazz, String query, Object... params ) {
+        return _load( rs -> clazz.getDeclaredConstructor( String.class ).newInstance( rs.getString( 0 ) ), query, params );
+    }
+
+    protected <E> List<E> _load( ObjectFactory<E> factory, String query, Object... params ) {
+        List<E> result = new ArrayList<>();
         PreparedStatement statement = null;
         ResultSet resultSet = null;
-        List<T> result = new ArrayList<>();
         try {
-            statement = _db.getConnection().prepareStatement( query );
             int i = 0;
+            statement = _db.getConnection().prepareStatement( query );
             for( Object param : params ) {
-                if( param == null ) {
-                    statement.setNull( ++i, Types.NULL );
-                }
-                else {
-                    statement.setObject( ++i, param );
-                }
+                statement.setObject( ++i, param );
             }
             _log.info( "Executing query {} with params {}", query, params );
             resultSet = statement.executeQuery();
             while( resultSet.next() ) {
-                T entity = clazz.newInstance();
-                entity.mapping( resultSet );
-                result.add( entity );
+                result.add( factory.create( resultSet ) );
             }
             return result;
         }
@@ -80,7 +66,7 @@ abstract public class DatabaseService<T extends DatabaseModel> {
             _log.error( "SQL Error: {}", e.getLocalizedMessage(), e );
             return new ArrayList<>();
         }
-        catch( InstantiationException | IllegalAccessException e ) {
+        catch( InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e ) {
             _log.error( "Object mapping error: {}", e.getLocalizedMessage(), e );
             return new ArrayList<>();
         }
@@ -88,10 +74,6 @@ abstract public class DatabaseService<T extends DatabaseModel> {
             _close( statement );
             _close( resultSet );
         }
-    }
-
-    protected T loadObject( Class<T> clazz, String query, Object... params ) throws SQLException, InstantiationException, IllegalAccessException {
-        return loadList( clazz, query, params ).get( 0 );
     }
 
     private void _close( Statement statement ) {

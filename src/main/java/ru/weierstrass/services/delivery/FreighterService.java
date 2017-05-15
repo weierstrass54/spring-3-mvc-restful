@@ -2,7 +2,7 @@ package ru.weierstrass.services.delivery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.weierstrass.components.database.DatabaseService;
+import ru.weierstrass.components.database.ORMDatabaseService;
 import ru.weierstrass.models.Freighter;
 
 import javax.sql.DataSource;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Service
-public class FreighterService extends DatabaseService<Freighter> {
+public class FreighterService extends ORMDatabaseService<Freighter> {
 
     @Autowired
     public FreighterService( DataSource db ) {

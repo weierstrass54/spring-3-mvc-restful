@@ -2,7 +2,7 @@ package ru.weierstrass.services.article;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.weierstrass.components.database.DatabaseService;
+import ru.weierstrass.components.database.ORMDatabaseService;
 import ru.weierstrass.models.article.Promo;
 
 import javax.sql.DataSource;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Service
-public class PromoService extends DatabaseService<Promo> {
+public class PromoService extends ORMDatabaseService<Promo> {
 
     @Autowired
     public PromoService( DataSource db ) {
