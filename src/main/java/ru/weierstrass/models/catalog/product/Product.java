@@ -1,15 +1,14 @@
 package ru.weierstrass.models.catalog.product;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import ru.weierstrass.models.catalog.Brand;
-import ru.weierstrass.models.catalog.Category;
-import ru.weierstrass.models.commons.DatabaseModel;
-import ru.weierstrass.services.catalog.product.ProductService;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import ru.weierstrass.models.catalog.Brand;
+import ru.weierstrass.models.catalog.Category;
+import ru.weierstrass.models.commons.DatabaseModel;
+import ru.weierstrass.services.catalog.product.ProductService;
 
 abstract public class Product implements DatabaseModel {
 
@@ -24,6 +23,10 @@ abstract public class Product implements DatabaseModel {
 
     private int categoryId;
     private int brandId;
+
+    public Product() {
+        this.images = new ArrayList<>();
+    }
 
     @Override
     public int getId() {
@@ -46,8 +49,16 @@ abstract public class Product implements DatabaseModel {
         return this.category;
     }
 
+    public void setCategory(ProductService<? extends Product>.Relation<Category> category) {
+        this.category = category.get();
+    }
+
     public Brand getBrand() {
         return this.brand;
+    }
+
+    public void setBrand(ProductService<? extends Product>.Relation<Brand> brand) {
+        this.brand = brand.get();
     }
 
     @JsonIgnore
@@ -60,29 +71,17 @@ abstract public class Product implements DatabaseModel {
         return this.brandId;
     }
 
-    public void setCategory( ProductService<? extends Product>.Relation<Category> category ) {
-        this.category = category.get();
-    }
-
-    public void setBrand( ProductService<? extends Product>.Relation<Brand> brand ) {
-        this.brand = brand.get();
-    }
-
-    public void setImages( ProductService<? extends Product>.Relation<List<Image>> images ) {
+    public void setImages(ProductService<? extends Product>.Relation<List<Image>> images) {
         this.images = images.get();
     }
 
-    public Product() {
-        this.images = new ArrayList<>();
-    }
-
     @Override
-    public void mapping( ResultSet rs ) throws SQLException {
-        this.fullName = rs.getString( "fullName" );
-        this.shortName = rs.getString( "shortName" );
-        this.categoryId = rs.getInt( "categoryId" );
-        this.brandId = rs.getInt( "brandId" );
-        this.warranty = rs.getInt( "warranty" );
+    public void mapping(ResultSet rs) throws SQLException {
+        this.fullName = rs.getString("fullName");
+        this.shortName = rs.getString("shortName");
+        this.categoryId = rs.getInt("categoryId");
+        this.brandId = rs.getInt("brandId");
+        this.warranty = rs.getInt("warranty");
     }
 
 }

@@ -1,12 +1,10 @@
 package ru.weierstrass.components.database;
 
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
@@ -16,86 +14,84 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 abstract public class DatabaseService {
 
-    private static final Logger _log = LoggerFactory.getLogger( DatabaseService.class );
+    private static final Logger _log = LoggerFactory.getLogger(DatabaseService.class);
 
     private DataSource _db;
 
     @Autowired
-    DatabaseService( DataSource db ) {
+    DatabaseService(DataSource db) {
         _db = db;
     }
 
-    protected interface ObjectFactory<E> {
-        E create( ResultSet rs ) throws SQLException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException;
+    protected Integer loadInt(String query, Object... params) {
+        return Integer.valueOf(loadString(query, params));
     }
 
-    protected Integer loadInt( String query, Object... params ) {
-        return Integer.valueOf( loadString( query, params ) );
+    protected Double loadDouble(String query, Object... params) {
+        return Double.valueOf(loadString(query, params));
     }
 
-    protected Double loadDouble( String query, Object... params ) {
-        return Double.valueOf( loadString( query, params ) );
+    protected String loadString(String query, Object... params) {
+        return loadColumn(String.class, query, params).get(0);
     }
 
-    protected String loadString( String query, Object... params ) {
-        return loadColumn( String.class, query, params ).get( 0 );
+    protected <E> List<E> loadColumn(Class<E> clazz, String query, Object... params) {
+        return _load(rs -> clazz.getDeclaredConstructor(String.class).newInstance(rs.getString(0)),
+            query, params);
     }
 
-    protected <E> List<E> loadColumn( Class<E> clazz, String query, Object... params ) {
-        return _load( rs -> clazz.getDeclaredConstructor( String.class ).newInstance( rs.getString( 0 ) ), query, params );
-    }
-
-    protected <E> List<E> _load( ObjectFactory<E> factory, String query, Object... params ) {
+    protected <E> List<E> _load(ObjectFactory<E> factory, String query, Object... params) {
         List<E> result = new ArrayList<>();
         PreparedStatement statement = null;
         ResultSet resultSet = null;
         try {
             int i = 0;
-            statement = _db.getConnection().prepareStatement( query );
-            for( Object param : params ) {
-                statement.setObject( ++i, param );
+            statement = _db.getConnection().prepareStatement(query);
+            for (Object param : params) {
+                statement.setObject(++i, param);
             }
-            _log.info( "Executing query {} with params {}", query, params );
+            _log.info("Executing query {} with params {}", query, params);
             resultSet = statement.executeQuery();
-            while( resultSet.next() ) {
-                result.add( factory.create( resultSet ) );
+            while (resultSet.next()) {
+                result.add(factory.create(resultSet));
             }
             return result;
-        }
-        catch( SQLException e ) {
-            _log.error( "SQL Error: {}", e.getLocalizedMessage(), e );
+        } catch (SQLException e) {
+            _log.error("SQL Error: {}", e.getLocalizedMessage(), e);
             return new ArrayList<>();
-        }
-        catch( InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e ) {
-            _log.error( "Object mapping error: {}", e.getLocalizedMessage(), e );
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            _log.error("Object mapping error: {}", e.getLocalizedMessage(), e);
             return new ArrayList<>();
-        }
-        finally {
-            _close( statement );
-            _close( resultSet );
+        } finally {
+            _close(statement);
+            _close(resultSet);
         }
     }
 
-    private void _close( Statement statement ) {
-        if( statement != null ) {
+    private void _close(Statement statement) {
+        if (statement != null) {
             try {
                 statement.close();
-            }
-            catch( SQLException e ) {
-                _log.error( "Cannot close statement by reason: {}", e.getLocalizedMessage(), e );
+            } catch (SQLException e) {
+                _log.error("Cannot close statement by reason: {}", e.getLocalizedMessage(), e);
             }
         }
     }
 
-    private void _close( ResultSet resultSet ) {
-        if( resultSet != null ) {
+    private void _close(ResultSet resultSet) {
+        if (resultSet != null) {
             try {
                 resultSet.close();
-            }
-            catch( SQLException e ) {
-                _log.error( "Cannot close resultSet by reason: {}", e.getLocalizedMessage(), e );
+            } catch (SQLException e) {
+                _log.error("Cannot close resultSet by reason: {}", e.getLocalizedMessage(), e);
             }
         }
+    }
+
+    protected interface ObjectFactory<E> {
+
+        E create(ResultSet rs)
+            throws SQLException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException;
     }
 
 }
