@@ -1,12 +1,11 @@
 package ru.weierstrass.models.catalog;
 
-import ru.weierstrass.models.commons.DatabaseModel;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import ru.weierstrass.models.commons.DatabaseModel;
 
 public class Category implements DatabaseModel {
 
@@ -27,14 +26,20 @@ public class Category implements DatabaseModel {
         this.children = new ArrayList<>();
     }
 
-    public static Category buildTree( Map<Integer, Category> map ) {
-        Category root = new Category( "Catalog", "Каталог" );
-        for( Category category : map.values() ) {
-            if( category.getParentId() == 0 ) {
-                root.append( category );
-            }
-            else if( map.containsKey( category.getParentId() ) ) {
-                map.get( category.getParentId() ).append( category );
+    private Category(String alias, String name) {
+        this();
+        this.id = 0;
+        this.alias = alias;
+        this.name = name;
+    }
+
+    public static Category buildTree(Map<Integer, Category> map) {
+        Category root = new Category("Catalog", "Каталог");
+        for (Category category : map.values()) {
+            if (category.getParentId() == 0) {
+                root.append(category);
+            } else if (map.containsKey(category.getParentId())) {
+                map.get(category.getParentId()).append(category);
             }
         }
         return root;
@@ -66,23 +71,16 @@ public class Category implements DatabaseModel {
     }
 
     @Override
-    public void mapping( ResultSet rs ) throws SQLException {
-        this.id = rs.getInt( "id" );
-        this.alias = rs.getString( "alias" );
-        this.name = rs.getString( "name" );
-        this.parentId = rs.getInt( "parentId" );
-        this.isSection = rs.getBoolean( "isSection" );
+    public void mapping(ResultSet rs) throws SQLException {
+        this.id = rs.getInt("id");
+        this.alias = rs.getString("alias");
+        this.name = rs.getString("name");
+        this.parentId = rs.getInt("parentId");
+        this.isSection = rs.getBoolean("isSection");
     }
 
-    private Category( String alias, String name ) {
-        this();
-        this.id = 0;
-        this.alias = alias;
-        this.name = name;
-    }
-
-    private void append( Category category ) {
-        this.children.add( category );
+    private void append(Category category) {
+        this.children.add(category);
     }
 
 }

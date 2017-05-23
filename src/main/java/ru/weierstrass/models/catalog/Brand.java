@@ -1,15 +1,20 @@
 package ru.weierstrass.models.catalog;
 
-import ru.weierstrass.models.commons.DatabaseModel;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import ru.weierstrass.components.cache.LinoIdentifiable;
+import ru.weierstrass.models.commons.DatabaseModel;
 
-public class Brand implements DatabaseModel {
+public class Brand implements DatabaseModel, LinoIdentifiable {
 
     protected int id;
     protected String name;
     protected String url;
+
+    @Override
+    public String getKey() {
+        return String.valueOf(getId());
+    }
 
     @Override
     public int getId() {
@@ -25,10 +30,10 @@ public class Brand implements DatabaseModel {
     }
 
     @Override
-    public void mapping( ResultSet rs ) throws SQLException {
-        this.id = rs.getInt( "id" );
-        this.name = rs.getString( "name" );
-        this.url = rs.getString( "url" );
+    public void mapping(ResultSet rs) throws SQLException {
+        this.id = rs.getInt("id");
+        this.name = rs.getString("name");
+        this.url = rs.getString("url");
     }
 
 }

@@ -1,9 +1,8 @@
 package ru.weierstrass.models.address;
 
-import ru.weierstrass.models.commons.DatabaseModel;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import ru.weierstrass.models.commons.DatabaseModel;
 
 public class Region implements DatabaseModel {
 
@@ -21,7 +20,7 @@ public class Region implements DatabaseModel {
     }
 
     public String getFullName() {
-        switch( this.type ) {
+        switch (this.type) {
             case 2:
                 return this.getName() + " автономная область";
             case 3:
@@ -40,10 +39,10 @@ public class Region implements DatabaseModel {
     }
 
     @Override
-    public void mapping( ResultSet rs ) throws SQLException {
-        this.id = rs.getInt( "id" );
-        this.type = rs.getInt( "type" );
-        this.name = rs.getString( "name" );
+    public void mapping(ResultSet rs) throws SQLException {
+        this.id = rs.getInt("id");
+        this.type = rs.getInt("type");
+        this.name = rs.getString("name");
     }
 
 }

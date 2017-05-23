@@ -1,9 +1,8 @@
 package ru.weierstrass.models.catalog.product;
 
-import ru.weierstrass.models.commons.DatabaseModel;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import ru.weierstrass.models.commons.DatabaseModel;
 
 public class Image implements DatabaseModel {
 
@@ -62,16 +61,16 @@ public class Image implements DatabaseModel {
     }
 
     @Override
-    public void mapping( ResultSet rs ) throws SQLException {
-        this.id = rs.getInt( "id" );
-        this.referenceId = rs.getInt( "referenceId" );
-        this.position = rs.getInt( "position" );
-        this.description = rs.getString( "description" );
-        this.extension = rs.getString( "exception" );
-        this.extensionMedium = rs.getString( "'extensionMedium'" );
-        this.extensionSmall = rs.getString( "extensionSmall" );
-        this.originalWidth = rs.getInt( "originalWidth" );
-        this.originalHeight = rs.getInt( "originalHeight" );
+    public void mapping(ResultSet rs) throws SQLException {
+        this.id = rs.getInt("id");
+        this.referenceId = rs.getInt("referenceId");
+        this.position = rs.getInt("position");
+        this.description = rs.getString("description");
+        this.extension = rs.getString("exception");
+        this.extensionMedium = rs.getString("'extensionMedium'");
+        this.extensionSmall = rs.getString("extensionSmall");
+        this.originalWidth = rs.getInt("originalWidth");
+        this.originalHeight = rs.getInt("originalHeight");
     }
-    
+
 }

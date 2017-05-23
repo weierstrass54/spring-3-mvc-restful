@@ -1,9 +1,8 @@
 package ru.weierstrass.models.address;
 
-import ru.weierstrass.models.commons.DatabaseModel;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import ru.weierstrass.models.commons.DatabaseModel;
 
 public class Area implements DatabaseModel {
 
@@ -24,9 +23,9 @@ public class Area implements DatabaseModel {
     }
 
     @Override
-    public void mapping( ResultSet rs ) throws SQLException {
-        this.id = rs.getInt( "id" );
-        this.name = rs.getString( "name" );
+    public void mapping(ResultSet rs) throws SQLException {
+        this.id = rs.getInt("id");
+        this.name = rs.getString("name");
     }
 
 }

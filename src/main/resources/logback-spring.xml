@@ -1,14 +1,14 @@
 <configuration debug="false" scan="true" scanPeriod="1 minutes">
-  <timestamp key="seconds" datePattern="HHmmss"/>
-  <logger name="test" level="INFO"/>
+  <timestamp datePattern="HHmmss" key="seconds"/>
+  <logger level="INFO" name="test"/>
 
-  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+  <appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
     <encoder>
       <pattern>%7relative %-5level .\(%F:%L\) %msg%n</pattern>
     </encoder>
   </appender>
 
-  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+  <appender class="ch.qos.logback.core.FileAppender" name="FILE">
     <file>api-${seconds}.log</file>
     <append>true</append>
     <encoder>

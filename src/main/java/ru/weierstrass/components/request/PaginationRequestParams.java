@@ -10,15 +10,15 @@ public class PaginationRequestParams {
 
     protected Collection<String> errors;
 
-    public PaginationRequestParams( int chunk, int page ) {
+    public PaginationRequestParams(int chunk, int page) {
         this.chunk = chunk;
         this.page = page;
         this.errors = new ArrayList<>();
         this.check();
     }
 
-    public PaginationRequestParams( int chunk ) {
-        this( chunk, 1 );
+    public PaginationRequestParams(int chunk) {
+        this(chunk, 1);
     }
 
     public Collection<String> getErrors() {
@@ -27,14 +27,14 @@ public class PaginationRequestParams {
 
     public String getErrorsString() {
         String result = "";
-        for( String error : this.errors ) {
+        for (String error : this.errors) {
             result += '\n' + error;
         }
         return result;
     }
 
     public int getOffset() {
-        return ( this.page - 1 ) * this.getLimit();
+        return (this.page - 1) * this.getLimit();
     }
 
     public int getLimit() {
@@ -46,11 +46,11 @@ public class PaginationRequestParams {
     }
 
     protected void check() {
-        if( this.chunk <= 0 ) {
-            this.errors.add( "Parameter `chunk` must be greater than 0." );
+        if (this.chunk <= 0) {
+            this.errors.add("Parameter `chunk` must be greater than 0.");
         }
-        if( this.page <= 0 ) {
-            this.errors.add( "Parameter `page` must be greater than 0." );
+        if (this.page <= 0) {
+            this.errors.add("Parameter `page` must be greater than 0.");
         }
     }
 
