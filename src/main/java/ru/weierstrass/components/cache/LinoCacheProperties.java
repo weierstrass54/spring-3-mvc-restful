@@ -2,7 +2,7 @@ package ru.weierstrass.components.cache;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties( prefix = "lino" )
+@ConfigurationProperties( prefix = "linoCache" )
 public class LinoCacheProperties {
 
     private String name = "default-lino";

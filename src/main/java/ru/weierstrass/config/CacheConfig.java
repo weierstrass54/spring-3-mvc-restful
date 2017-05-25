@@ -8,6 +8,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import ru.weierstrass.components.cache.LinoCacheManager;
 import ru.weierstrass.components.cache.LinoCacheProperties;
 
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableCaching
+@EnableScheduling
 @EnableConfigurationProperties( LinoCacheProperties.class )
 public class CacheConfig {
 
@@ -31,11 +33,5 @@ public class CacheConfig {
     public CacheManager cacheManager() {
         return new LinoCacheManager( _properties );
     }
-
-    /*
-    public CacheManager ttlCacheManager() {
-        return new LinoCacheManager( _properties, 1, TimeUnit.HOURS );
-    }
-    */
 
 }
