@@ -1,5 +1,6 @@
 package ru.weierstrass.models;
 
+import ru.weierstrass.components.cache.LinoIdentifiable;
 import ru.weierstrass.models.commons.DatabaseModel;
 
 import java.sql.ResultSet;
@@ -8,11 +9,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Freighter implements DatabaseModel {
+public class Freighter implements DatabaseModel, LinoIdentifiable {
 
     private int id;
     private String name;
     private List<Integer> cityIds;
+
+    @Override
+    public String getKey() {
+        return String.valueOf( getId() );
+    }
 
     @Override
     public int getId() {

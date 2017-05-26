@@ -14,7 +14,7 @@ public class Brand implements DatabaseModel, LinoIdentifiable {
 
     @Override
     public String getKey() {
-        return String.valueOf(getId());
+        return String.valueOf( getId() );
     }
 
     @Override
@@ -31,10 +31,10 @@ public class Brand implements DatabaseModel, LinoIdentifiable {
     }
 
     @Override
-    public void mapping(ResultSet rs) throws SQLException {
-        this.id = rs.getInt("id");
-        this.name = rs.getString("name");
-        this.url = rs.getString("url");
+    public void mapping( ResultSet rs ) throws SQLException {
+        this.id = rs.getInt( "id" );
+        this.name = rs.getString( "name" );
+        this.url = rs.getString( "url" );
     }
 
 }

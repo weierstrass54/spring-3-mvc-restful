@@ -12,8 +12,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import ru.weierstrass.components.cache.LinoCacheManager;
 import ru.weierstrass.components.cache.LinoCacheProperties;
 
-import java.util.concurrent.TimeUnit;
-
 @Configuration
 @EnableCaching
 @EnableScheduling

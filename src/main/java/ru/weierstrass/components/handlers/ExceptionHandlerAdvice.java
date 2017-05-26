@@ -36,7 +36,7 @@ public class ExceptionHandlerAdvice {
         return handleException( e, HttpStatus.BAD_REQUEST );
     }
 
-    @ExceptionHandler( value = { NoSuchElementException.class })
+    @ExceptionHandler( value = { NoSuchElementException.class } )
     public ResponseEntity<String> handleNotFound( Exception e ) {
         return handleException( e, HttpStatus.NOT_FOUND );
     }

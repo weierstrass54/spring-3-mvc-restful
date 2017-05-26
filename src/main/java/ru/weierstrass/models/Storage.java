@@ -22,7 +22,7 @@ public class Storage implements DatabaseModel, LinoIdentifiable {
 
     @Override
     public String getKey() {
-        return String.valueOf(getId());
+        return String.valueOf( getId() );
     }
 
     @Override
@@ -68,17 +68,17 @@ public class Storage implements DatabaseModel, LinoIdentifiable {
     }
 
     @Override
-    public void mapping(ResultSet rs) throws SQLException {
-        this.id = rs.getInt("id");
-        this.name = rs.getString("name");
-        this.address = rs.getString("address");
-        this.fullAddress = rs.getString("fullAddress");
-        this.phone = rs.getString("phone");
-        this.infoEmail = rs.getString("infoEmail");
-        this.deliveryEmail = rs.getString("deliveryEmail");
-        this.serviceEmail = rs.getString("serviceEmail");
-        this.priceZoneId = rs.getInt("priceZoneId");
-        this.cityId = rs.getInt("cityId");
+    public void mapping( ResultSet rs ) throws SQLException {
+        this.id = rs.getInt( "id" );
+        this.name = rs.getString( "name" );
+        this.address = rs.getString( "address" );
+        this.fullAddress = rs.getString( "fullAddress" );
+        this.phone = rs.getString( "phone" );
+        this.infoEmail = rs.getString( "infoEmail" );
+        this.deliveryEmail = rs.getString( "deliveryEmail" );
+        this.serviceEmail = rs.getString( "serviceEmail" );
+        this.priceZoneId = rs.getInt( "priceZoneId" );
+        this.cityId = rs.getInt( "cityId" );
     }
 
 }

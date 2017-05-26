@@ -18,25 +18,27 @@ public class CityService extends ORMDatabaseService<City> {
     private StorageService _storageService;
 
     @Autowired
-    public CityService(DataSource db, StorageService storageService) {
-        super(db);
+    public CityService( DataSource db, StorageService storageService ) {
+        super( db );
         _storageService = storageService;
     }
 
-    @Cacheable("city")
-    public List<City> loadList(Integer regionId, Integer areaId) {
-        List<City> cities = loadList(City.class, "SELECT * FROM public_api_v01.address_get_cities( ?, ? )", regionId, areaId);
+    @Cacheable( "city" )
+    public List<City> loadList( Integer regionId, Integer areaId ) {
+        List<City> cities = loadList( City.class,
+            "SELECT * FROM public_api_v01.address_get_cities( ?, ? )", regionId, areaId
+        );
         Map<Integer, List<Storage>> storages = _storageService.loadGroupByCity();
-        cities.forEach(city -> {
-            if (storages.get(city.getId()) != null) {
-                city.setRelatedShops(relation(storages.get(city.getId())));
+        cities.forEach( city -> {
+            if( storages.get( city.getId() ) != null ) {
+                city.setRelatedShops( relation( storages.get( city.getId() ) ) );
             }
-        });
+        } );
         return cities;
     }
 
     public List<City> loadList() {
-        return loadList(null, null);
+        return loadList( null, null );
     }
 
 }

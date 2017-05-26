@@ -4,6 +4,16 @@ public class AndroidArticle extends Article {
 
     protected String caption;
 
+    public AndroidArticle( Article article ) {
+        this.id = article.getId();
+        this.title = article.getTitle();
+        this.image = article.getImage();
+        this.created = article.getCreated();
+        this.contentShort = article.getContentShort();
+        this.contentFull = article.getContentFull();
+        this.caption = "https://e2e4online.ru/shop/info/events/?id=" + this.getId();
+    }
+
     @Override
     public String getImage() {
         return this.image;
@@ -17,16 +27,6 @@ public class AndroidArticle extends Article {
 
     public String getCaption() {
         return this.caption;
-    }
-
-    public AndroidArticle( Article article ) {
-        this.id = article.getId();
-        this.title = article.getTitle();
-        this.image = article.getImage();
-        this.created = article.getCreated();
-        this.contentShort = article.getContentShort();
-        this.contentFull = article.getContentFull();
-        this.caption = "https://e2e4online.ru/shop/info/events/?id=" + this.getId();
     }
 
 }

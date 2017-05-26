@@ -27,6 +27,13 @@ public class Category implements DatabaseModel {
         this.children = new ArrayList<>();
     }
 
+    private Category( String alias, String name ) {
+        this();
+        this.id = 0;
+        this.alias = alias;
+        this.name = name;
+    }
+
     public static Category buildTree( Map<Integer, Category> map ) {
         Category root = new Category( "Catalog", "Каталог" );
         for( Category category : map.values() ) {
@@ -72,13 +79,6 @@ public class Category implements DatabaseModel {
         this.name = rs.getString( "name" );
         this.parentId = rs.getInt( "parentId" );
         this.isSection = rs.getBoolean( "isSection" );
-    }
-
-    private Category( String alias, String name ) {
-        this();
-        this.id = 0;
-        this.alias = alias;
-        this.name = name;
     }
 
     private void append( Category category ) {

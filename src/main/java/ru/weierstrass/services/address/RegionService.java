@@ -13,13 +13,13 @@ import java.util.List;
 public class RegionService extends ORMDatabaseService<Region> {
 
     @Autowired
-    public RegionService(DataSource db) {
-        super(db);
+    public RegionService( DataSource db ) {
+        super( db );
     }
 
-    @Cacheable("region")
+    @Cacheable( "region" )
     public List<Region> loadList() {
-        return loadList(Region.class, "SELECT * FROM public_api_v01.address_get_regions()");
+        return loadList( Region.class, "SELECT * FROM public_api_v01.address_get_regions()" );
     }
 
 }

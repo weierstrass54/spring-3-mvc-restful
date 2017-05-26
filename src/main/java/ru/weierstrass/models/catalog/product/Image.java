@@ -73,5 +73,5 @@ public class Image implements DatabaseModel {
         this.originalWidth = rs.getInt( "originalWidth" );
         this.originalHeight = rs.getInt( "originalHeight" );
     }
-    
+
 }

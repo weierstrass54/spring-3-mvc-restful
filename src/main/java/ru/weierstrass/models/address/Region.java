@@ -14,7 +14,7 @@ public class Region implements DatabaseModel, LinoIdentifiable {
 
     @Override
     public String getKey() {
-        return String.valueOf(getId());
+        return String.valueOf( getId() );
     }
 
     @Override
@@ -27,7 +27,7 @@ public class Region implements DatabaseModel, LinoIdentifiable {
     }
 
     public String getFullName() {
-        switch (this.type) {
+        switch( this.type ) {
             case 2:
                 return this.getName() + " автономная область";
             case 3:
@@ -46,10 +46,10 @@ public class Region implements DatabaseModel, LinoIdentifiable {
     }
 
     @Override
-    public void mapping(ResultSet rs) throws SQLException {
-        this.id = rs.getInt("id");
-        this.type = rs.getInt("type");
-        this.name = rs.getString("name");
+    public void mapping( ResultSet rs ) throws SQLException {
+        this.id = rs.getInt( "id" );
+        this.type = rs.getInt( "type" );
+        this.name = rs.getString( "name" );
     }
 
 }

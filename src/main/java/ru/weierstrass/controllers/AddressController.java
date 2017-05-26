@@ -23,39 +23,39 @@ public class AddressController {
 
     @Autowired
     public AddressController(
-            RegionService regionService,
-            AreaService areaService,
-            CityService cityService
+        RegionService regionService,
+        AreaService areaService,
+        CityService cityService
     ) {
         _regionService = regionService;
         _areaService = areaService;
         _cityService = cityService;
     }
 
-    @RequestMapping(path = "/address/region", method = RequestMethod.GET)
+    @RequestMapping( path = "/address/region", method = RequestMethod.GET )
     public List<Region> getRegionList() throws Exception {
         return _regionService.loadList();
     }
 
-    @RequestMapping(path = "/address/area", method = RequestMethod.GET)
-    public List<Area> getAreaList(@RequestParam("regionId") Integer regionId) throws Exception {
-        return _areaService.loadList(regionId);
+    @RequestMapping( path = "/address/area", method = RequestMethod.GET )
+    public List<Area> getAreaList( @RequestParam( "regionId" ) Integer regionId ) throws Exception {
+        return _areaService.loadList( regionId );
     }
 
-    @RequestMapping(path = "/address/mainCity", method = RequestMethod.GET)
+    @RequestMapping( path = "/address/mainCity", method = RequestMethod.GET )
     public List<City> getMainCityList() throws Exception {
         return _cityService.loadList();
     }
 
-    @RequestMapping(path = "/address/city", method = RequestMethod.GET)
+    @RequestMapping( path = "/address/city", method = RequestMethod.GET )
     public List<City> getCityList(
-            @RequestParam(name = "regionId", required = false) Integer regionId,
-            @RequestParam(name = "areaId", required = false) Integer areaId
+        @RequestParam( name = "regionId", required = false ) Integer regionId,
+        @RequestParam( name = "areaId", required = false ) Integer areaId
     ) throws Exception {
-        if (regionId == null && areaId == null) {
-            throw new IllegalArgumentException("Params `regionId` and `areaId` cannot be null both.");
+        if( regionId == null && areaId == null ) {
+            throw new IllegalArgumentException( "Params `regionId` and `areaId` cannot be null both." );
         }
-        return _cityService.loadList(regionId, areaId);
+        return _cityService.loadList( regionId, areaId );
     }
 
 }

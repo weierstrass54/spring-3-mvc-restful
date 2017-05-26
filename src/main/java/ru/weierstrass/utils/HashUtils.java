@@ -8,7 +8,7 @@ public class HashUtils {
 
     /**
      * Convert string to md5 hash as hex string
-     * @param string
+     *
      * @return md5 hash
      */
     public static String md5( String string ) {

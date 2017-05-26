@@ -33,22 +33,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers( "/**" ).permitAll()
             .and()
             .sessionManagement()
-                //REST API has no sessions
-                .sessionCreationPolicy( SessionCreationPolicy.STATELESS )
+            //REST API has no sessions
+            .sessionCreationPolicy( SessionCreationPolicy.STATELESS )
             .and()
             .httpBasic()
-                .realmName( _failure.getRealm() )
-                //Set entry point for fail
-                .authenticationEntryPoint( _failure );
+            .realmName( _failure.getRealm() )
+            //Set entry point for fail
+            .authenticationEntryPoint( _failure );
     }
 
     @Override
     protected void configure( AuthenticationManagerBuilder auth ) throws Exception {
         auth.jdbcAuthentication()
             .dataSource( _db )
-                .usersByUsernameQuery( "SELECT login, LOWER( password ), true FROM site.users WHERE login = ?" )
-                .passwordEncoder( new Md5PasswordEncoder() )
-                .authoritiesByUsernameQuery( "SELECT login, 'USER' FROM site.users WHERE login = ?" );
+            .usersByUsernameQuery(
+                "SELECT login, LOWER( password ), true FROM site.users WHERE login = ?" )
+            .passwordEncoder( new Md5PasswordEncoder() )
+            .authoritiesByUsernameQuery( "SELECT login, 'USER' FROM site.users WHERE login = ?" );
     }
 
 }

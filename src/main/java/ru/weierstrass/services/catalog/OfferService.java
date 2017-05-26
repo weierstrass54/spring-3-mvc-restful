@@ -7,8 +7,6 @@ import ru.weierstrass.services.catalog.product.ImageService;
 import ru.weierstrass.services.catalog.product.ProductService;
 
 import javax.sql.DataSource;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,8 +23,12 @@ public class OfferService extends ProductService<Offer> {
     }
 
     public List<Offer> loadList() {
-        List<Integer> ids = loadIds( "SELECT * FROM public_api_v07.catalog_get_products_by_search( 0, 5, 1, 7, null, null, null, null, '[{\"type\": \"price\", \"direction\": \"asc\"}]'::json )" );
-        List<Offer> list = loadList( Offer.class, "SELECT * FROM public_api_v01.catalog_get_product_by_ids( <ids> )" );
+        List<Integer> ids = loadIds(
+            "SELECT * FROM public_api_v07.catalog_get_products_by_search( 0, 5, 1, 7, null, null, null, null, '[{\"type\": \"price\", \"direction\": \"asc\"}]'::json )" );
+        List<Offer> list = loadList(
+            Offer.class,
+            "SELECT * FROM public_api_v01.catalog_get_product_by_ids( <ids> )"
+        );
         aggregate( list );
         return list;
     }

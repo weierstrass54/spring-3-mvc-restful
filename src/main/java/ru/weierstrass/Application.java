@@ -19,14 +19,14 @@ public class Application extends SpringBootServletInitializer {
         props.put( "server.error.whitelabel.enabled", "false" );
     }
 
+    public static void main( String[] args ) {
+        SpringApplication.run( Application.class, args );
+    }
+
     @Override
     protected SpringApplicationBuilder configure( SpringApplicationBuilder builder ) {
         builder.properties( props );
         return builder.sources( Application.class );
-    }
-
-    public static void main( String[] args ) {
-        SpringApplication.run( Application.class, args );
     }
 
 }

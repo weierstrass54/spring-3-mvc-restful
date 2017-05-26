@@ -1,18 +1,18 @@
 package ru.weierstrass.components.database;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.sql.DataSource;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
-import javax.sql.DataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.stream.Collectors;
 
 abstract public class DatabaseService {
 
@@ -25,8 +25,9 @@ abstract public class DatabaseService {
         _db = db;
     }
 
-    protected interface ObjectFactory<E> {
-        E create( ResultSet rs ) throws SQLException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException;
+    protected <E> String array( List<E> params ) {
+        List<String> stringParams = params.stream().map( String::valueOf ).collect( Collectors.toList() );
+        return "ARRAY[" + String.join( ",", stringParams ) + "]";
     }
 
     protected Integer loadInt( String query, Object... params ) {
@@ -42,7 +43,9 @@ abstract public class DatabaseService {
     }
 
     protected <E> List<E> loadColumn( Class<E> clazz, String query, Object... params ) {
-        return _load( rs -> clazz.getDeclaredConstructor( String.class ).newInstance( rs.getString( 0 ) ), query, params );
+        return _load( rs -> clazz.getDeclaredConstructor( String.class ).newInstance( rs.getString( 0 ) ),
+            query, params
+        );
     }
 
     protected <E> List<E> _load( ObjectFactory<E> factory, String query, Object... params ) {
@@ -96,6 +99,13 @@ abstract public class DatabaseService {
                 _log.error( "Cannot close resultSet by reason: {}", e.getLocalizedMessage(), e );
             }
         }
+    }
+
+    protected interface ObjectFactory<E> {
+
+        E create( ResultSet rs )
+            throws SQLException, NoSuchMethodException, InvocationTargetException, IllegalAccessException,
+            InstantiationException;
     }
 
 }

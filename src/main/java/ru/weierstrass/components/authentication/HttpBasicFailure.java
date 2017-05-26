@@ -23,7 +23,10 @@ public class HttpBasicFailure implements AuthenticationEntryPoint {
     }
 
     @Override
-    public void commence( HttpServletRequest request, HttpServletResponse response, AuthenticationException authException ) throws IOException, ServletException {
+    public void commence(
+        HttpServletRequest request, HttpServletResponse response,
+        AuthenticationException authException
+    ) throws IOException, ServletException {
         response.setHeader( "WWW-Authenticate", "Basic realm=\"" + REALM + "\"" );
         response.setContentType( CONTENT_TYPE );
         response.setStatus( STATUS );
